@@ -14,19 +14,31 @@
         android:text="Welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="121dp"
+        android:layout_marginTop="39dp"
         android:id="@+id/textView"
         android:textSize="50sp"
-        android:textColor="@android:color/holo_red_dark" />
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="62dp" />
 
     <Button
         android:text="click me"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
+        android:id="@+id/main_button"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="56dp"
-        android:id="@+id/main_button" />
+        android:layout_marginBottom="143dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/main_text"
+        android:layout_above="@+id/main_button"
+        android:layout_alignStart="@+id/textView"
+        android:layout_marginBottom="38dp"
+        android:hint="Digite alguma coisa" />
 </RelativeLayout>
