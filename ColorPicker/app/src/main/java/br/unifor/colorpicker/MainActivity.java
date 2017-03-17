@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent it = new Intent(MainActivity.this, ColorChangeActivity.class);
+                Intent it = new Intent("RAPADURA");
 
                 it.putExtra("vermelho", mVermelho);
                 it.putExtra("verde", mVerde);
