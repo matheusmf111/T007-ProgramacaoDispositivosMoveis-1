@@ -21,16 +21,19 @@ public class BluetoothReceiver extends BroadcastReceiver {
 
             // TODO: Iniciou o processo de discovery
             mDevices = new ArrayList<>();
+            Log.i("APP", "Processo de discovery inicado!");
 
         } else if (BluetoothDevice.ACTION_FOUND.equals(intent.getAction())) {
 
             // TODO: Um dispositovo foi encontrado
             BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
             mDevices.add(device);
+            Log.i("APP", "Dispositivo encontrado!");
 
         } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(intent.getAction())) {
 
             // TODO: O processo de discovery encerrou
+            Log.i("APP", "Processo de discovery terminado!");
             for (BluetoothDevice device: mDevices) {
                 Log.i("APP", "Name: " + device.getName() + ", Address:" + device.getAddress());
             }
