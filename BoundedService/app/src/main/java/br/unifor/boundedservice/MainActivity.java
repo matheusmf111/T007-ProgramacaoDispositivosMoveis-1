@@ -4,7 +4,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Handler;
 import android.os.IBinder;
+import android.support.annotation.StringDef;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, CounterServiceListener {
 
     private TextView mMainNumber;
     private Button mMainStart;
@@ -21,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean mServiceConnected;
     private Intent mServiceIntent;
     private CounterService mService;
+
+    private Handler mUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mServiceIntent = new Intent(this, CounterService.class);
         startService(mServiceIntent);
         this.mServiceConnected = false;
+
+        this.mUpdate = new Handler();
 
     }
 
@@ -58,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onServiceConnected(ComponentName name, IBinder service) {
             CounterService.CounterBinder counterBinder = (CounterService.CounterBinder) service;
             mService = counterBinder.getInstance();
+            mService.setListener(MainActivity.this);
             mServiceConnected = true;
         }
 
@@ -96,4 +103,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
+    @Override
+    public void onCounterUpdate(final long counter) {
+
+        mUpdate.post(new Runnable() {
+
+            @Override
+            public void run() {
+
+                int min = (int) (counter / 60);
+                int seg = (int) (counter % 60);
+
+                String m = String.valueOf(min);
+                if(m.length()< 2){
+                    m = "0" + m;
+                }
+
+                String s = String.valueOf(seg);
+                if(s.length()< 2){
+                    s = "0" + s;
+                }
+
+                mMainNumber.setText(m + ":" + s);
+            }
+
+        });
+
+    }
+
 }
